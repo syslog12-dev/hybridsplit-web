@@ -1,253 +1,144 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#070907">
-  <title>HybridSplit Web MVP</title>
-  <style>
-    :root{--bg:#070907;--surface:#101310;--surface2:#151915;--line:#282d28;--text:#f6f8f3;--muted:#9aa39a;--lime:#a8f500;--lime2:#d7ff78;--danger:#ff6b61}
-    *{box-sizing:border-box} html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif} body{min-height:100vh}
-    .shell{max-width:760px;margin:0 auto;padding:0 16px 96px}.topbar{position:sticky;top:0;z-index:10;background:rgba(7,9,7,.94);backdrop-filter:blur(16px);padding:calc(14px + env(safe-area-inset-top)) 0 12px;border-bottom:1px solid #1d211d}
-    .brand{font-weight:900;font-size:20px;letter-spacing:-.03em}.brand span{color:var(--lime)}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:5px;margin-top:12px}
-    .tab{border:0;border-radius:11px;padding:11px;background:transparent;color:var(--muted);font-weight:800;font-size:15px}.tab.active{background:var(--lime);color:#081000}
-    .hero{padding:24px 0 14px}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--lime);font-weight:800}h1{font-size:31px;line-height:1.06;font-weight:900;letter-spacing:-.04em;margin:5px 0 8px}.muted{color:var(--muted)}
-    .panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:14px}.section-title{font-weight:900;font-size:17px;margin-bottom:14px}.label{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px}
-    select,input,textarea{width:100%;background:#0a0d0a;color:var(--text);border:1px solid #323832;border-radius:14px;padding:12px;font-size:16px;outline:none}input:focus,textarea:focus,select:focus{border-color:var(--lime)}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{grid-column:1/-1}.btn{width:100%;border:0;border-radius:15px;background:var(--lime);color:#081000;font-weight:900;padding:14px;font-size:16px}.btn-soft{border:1px solid #323832;background:var(--surface2);color:var(--text);border-radius:13px;padding:10px 12px;font-weight:800}.btn-danger{border:1px solid #5a2c2a;background:#241313;color:#ffb4ae;border-radius:12px;padding:8px 10px;font-weight:800;font-size:12px}
-    .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}.chip{white-space:nowrap;border:1px solid #323832;background:var(--surface);color:var(--muted);border-radius:999px;padding:9px 12px;font-size:13px;font-weight:800}.chip.active{background:var(--lime);color:#081000;border-color:var(--lime)}
-    .result{padding:13px 0;border-bottom:1px solid var(--line)}.result:last-child{border-bottom:0}.result-title{font-weight:800}.result-meta{font-size:12px;color:var(--muted);margin-top:3px}.hidden{display:none}.empty{border:1px dashed #323832;border-radius:15px;text-align:center;color:var(--muted);padding:20px}
-    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}.stat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px}.stat .k{font-size:11px;color:var(--muted);font-weight:700}.stat .v{font-size:24px;font-weight:900;margin-top:3px}.rowhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
-    .roster-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}.roster-row:last-child{border-bottom:0}.status{display:inline-block;margin-top:4px;padding:4px 8px;border-radius:999px;background:#1a211a;color:var(--lime2);font-size:11px;font-weight:800}.status.off{background:#241313;color:#ffb4ae}.actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.mini{border:1px solid #323832;background:var(--surface2);color:var(--text);border-radius:10px;padding:7px 9px;font-size:12px;font-weight:800}
-    .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#e9ffd4;color:#071000;border-radius:999px;padding:10px 16px;font-weight:900;display:none;z-index:30}@media(min-width:680px){h1{font-size:38px}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070907">
+<title>HybridSplit Web v3</title>
+<style>
+:root{
+  --bg:#070907;--bg2:#0b0e0b;--card:#111511;--card2:#151a15;--line:#252b25;
+  --text:#f5f7f1;--muted:#9ca59b;--lime:#c7f20d;--lime2:#e5ff63;--danger:#ff756c;
+}
+*{box-sizing:border-box}html,body{margin:0;background:radial-gradient(circle at top,#121712 0,#090b09 26%,#060806 72%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}body{min-height:100vh}.app{max-width:520px;margin:0 auto;min-height:100vh;padding:0 16px 98px}.top{position:sticky;top:0;z-index:20;background:rgba(7,9,7,.92);backdrop-filter:blur(16px);padding:calc(14px + env(safe-area-inset-top)) 0 10px;border-bottom:1px solid rgba(255,255,255,.05)}
+.brand{font-size:23px;font-weight:950;letter-spacing:-.055em;font-style:italic}.brand span{color:var(--lime)}.tagline{font-size:10px;letter-spacing:.14em;color:#bac2b8;margin-top:2px}.role{display:flex;gap:6px;margin-top:12px;background:#0e120e;border:1px solid var(--line);padding:4px;border-radius:13px}.role button{flex:1;border:0;background:transparent;color:var(--muted);font-weight:800;padding:9px 10px;border-radius:10px}.role button.active{background:var(--lime);color:#111700}.view{display:none}.view.active{display:block}.hero{padding:22px 2px 14px}.eyebrow{font-size:11px;color:var(--lime);font-weight:900;letter-spacing:.12em;text-transform:uppercase}.hero h1{font-size:30px;line-height:1.02;margin:5px 0 7px;letter-spacing:-.045em}.hero p{color:var(--muted);margin:0;font-size:14px;line-height:1.45}
+.card{background:linear-gradient(180deg,#131713,#0e120e);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 14px 35px rgba(0,0,0,.18)}.card.tight{padding:13px}.card-title{font-size:15px;font-weight:900}.sub{font-size:12px;color:var(--muted)}.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.profile{display:flex;align-items:center;gap:12px}.avatar{width:52px;height:52px;border-radius:50%;border:2px solid var(--lime);display:grid;place-items:center;background:#171d17;font-weight:950;color:var(--lime);font-size:17px}.pill{display:inline-flex;align-items:center;border-radius:999px;padding:4px 7px;font-size:10px;font-weight:900;background:var(--lime);color:#111700;margin-top:5px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}.metric{background:#0d100d;border:1px solid #202620;border-radius:14px;padding:12px}.metric b{display:block;font-size:21px;letter-spacing:-.04em}.metric span{font-size:10px;color:var(--muted)}.section-head{display:flex;align-items:center;justify-content:space-between;margin:17px 2px 9px}.section-head h2{font-size:16px;margin:0}.linkbtn{border:0;background:transparent;color:var(--lime);font-weight:800}.activity{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line)}.activity:last-child{border-bottom:0}.activity-icon{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#171e0f;border:1px solid #313b1c;color:var(--lime);font-size:11px;font-weight:900}.grow{flex:1}.activity strong{display:block;font-size:13px}.activity small{color:var(--muted);font-size:11px}.time{font-size:12px;font-weight:900}
+.btn{width:100%;border:0;border-radius:13px;background:var(--lime);color:#101500;padding:14px 16px;font-size:15px;font-weight:950}.btn.secondary{background:#161b16;color:var(--text);border:1px solid #303630}.btn.danger{background:#2a1716;color:#ffc2bd;border:1px solid #5b2c29}.chips{display:flex;gap:8px;overflow:auto;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}.chip{white-space:nowrap;border:1px solid #2f362f;background:#101410;color:var(--muted);border-radius:999px;padding:9px 12px;font-weight:850}.chip.active{background:var(--lime);color:#111700;border-color:var(--lime)}
+input,select,textarea{width:100%;background:#0b0f0b;color:var(--text);border:1px solid #303630;border-radius:12px;padding:12px;font-size:16px;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--lime)}label{display:block;font-size:11px;color:var(--muted);font-weight:800;margin-bottom:5px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.full{grid-column:1/-1}.station-list{display:grid;gap:9px}.station{display:flex;align-items:center;gap:11px;background:#101410;border:1px solid #252b25;border-radius:14px;padding:12px}.station .num{width:26px;height:26px;border-radius:50%;background:var(--lime);color:#101500;display:grid;place-items:center;font-weight:950;font-size:12px}.station .meta{flex:1}.station .meta b{display:block;font-size:13px}.station .meta span{color:var(--muted);font-size:11px}.station .arrow{color:var(--lime);font-weight:950}.selected-station{display:flex;align-items:center;gap:13px;background:#101410;border:1px solid var(--line);border-radius:15px;padding:14px;margin-bottom:14px}.selected-station .badge{width:44px;height:44px;border-radius:13px;background:#18210c;color:var(--lime);display:grid;place-items:center;font-weight:950}.selected-station h3{margin:0 0 3px;font-size:16px}.selected-station p{margin:0;color:var(--muted);font-size:12px}
+.summary-check{width:62px;height:62px;border-radius:50%;border:3px solid var(--lime);display:grid;place-items:center;color:var(--lime);font-size:30px;font-weight:900;margin:4px auto 12px}.center{text-align:center}.summary-list{margin-top:12px}.summary-line{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:12px}.summary-line:last-child{border-bottom:0}.stats4{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.historytabs{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.historytabs button{border:0;border-radius:999px;padding:9px;background:#141814;color:var(--muted);font-weight:850}.historytabs button.active{background:var(--lime);color:#111700}.team-row{display:grid;grid-template-columns:1.3fr .6fr .7fr;gap:8px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:12px}.team-row.head{color:var(--muted);font-size:10px}.team-name{display:flex;align-items:center;gap:8px}.miniavatar{width:28px;height:28px;border-radius:50%;background:#18210c;color:var(--lime);border:1px solid #42511d;display:grid;place-items:center;font-weight:900;font-size:10px}.status{font-size:10px;padding:4px 7px;border-radius:999px;background:#16200f;color:var(--lime2);font-weight:850}.status.off{background:#291717;color:#ffb8b2}.athlete-actions{display:flex;gap:6px;margin-top:7px}.athlete-actions button{border:1px solid #303630;background:#151915;color:#dfe5dd;border-radius:9px;padding:6px 8px;font-size:10px;font-weight:800}
+.nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(520px,100%);display:grid;grid-template-columns:repeat(5,1fr);gap:2px;background:rgba(9,11,9,.97);backdrop-filter:blur(20px);border-top:1px solid #222722;padding:8px 10px calc(8px + env(safe-area-inset-bottom));z-index:30}.nav button{border:0;background:transparent;color:#818a80;font-size:11px;font-weight:800;padding:9px 2px;border-radius:10px}.nav button.active{color:var(--lime);background:#11160d}.empty{padding:18px;border:1px dashed #303630;border-radius:13px;text-align:center;color:var(--muted);font-size:13px}.toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:#ecffd7;color:#0a1100;padding:10px 15px;border-radius:999px;font-weight:900;display:none;z-index:50}@media(min-width:700px){body{padding:26px}.app{border:1px solid #2b312b;border-radius:28px;background:rgba(5,7,5,.86);min-height:870px;overflow:hidden}.nav{bottom:26px;border:1px solid #2b312b;border-radius:0 0 28px 28px}}
+</style>
 </head>
 <body>
-<div class="shell">
-  <header class="topbar">
-    <div class="brand">HYBRID<span>SPLIT</span></div>
-    <div class="tabs"><button id="athleteTab" class="tab active">Athlete</button><button id="coachTab" class="tab">Coach Portal</button></div>
-  </header>
-  <main>
-    <section id="athleteView">
-      <div class="hero"><div class="eyebrow">Training Log</div><h1>Track the work that makes race day faster.</h1><p class="muted">Log HYROX station results from your phone.</p></div>
-      <div class="panel"><div class="label">Athlete</div><select id="athleteSelect"></select><div class="label" style="margin-top:14px">Station</div><div id="stationChips" class="chips"></div></div>
-      <div class="two">
-        <div class="panel"><div class="section-title">Log station</div><div class="grid">
-          <div><div class="label">Weight</div><input id="weight" inputmode="decimal" placeholder="152"></div><div><div class="label">Time</div><input id="time" placeholder="2:41"></div>
-          <div><div class="label">Reps</div><input id="reps" inputmode="numeric" placeholder="50"></div><div><div class="label">Distance</div><input id="distance" inputmode="numeric" placeholder="1000"></div>
-          <div class="full"><div class="label">RPE 1–10</div><input id="rpe" inputmode="numeric" placeholder="8"></div><div class="full"><div class="label">Notes</div><textarea id="notes" rows="3" placeholder="Technique, pacing, breaks..."></textarea></div>
-          <div class="full"><button id="saveBtn" class="btn">Save station result</button></div>
-        </div></div>
-        <div class="panel"><div class="rowhead"><div><div class="label">Completed stations</div><div id="completed" style="font-size:26px;font-weight:900">0 / 8</div></div><button id="resetBtn" class="btn-soft">Reset</button></div><div id="athleteResults"></div></div>
-      </div>
-    </section>
+<div class="app">
+<header class="top">
+  <div class="brand">HYBRID<span>SPLIT</span></div>
+  <div class="tagline">TRAIN. TRACK. PERFORM.</div>
+  <div class="role"><button id="athleteRole" class="active">Athlete</button><button id="coachRole">Coach</button></div>
+</header>
 
-    <section id="coachView" class="hidden">
-      <div class="hero"><div class="eyebrow">Coach Portal</div><h1>See the whole team at a glance.</h1><p class="muted">Manage your roster and review training activity.</p></div>
-      <div class="stats"><div class="stat"><div class="k">Active Athletes</div><div id="athleteCount" class="v">0</div></div><div class="stat"><div class="k">Entries</div><div id="entryCount" class="v">0</div></div><div class="stat"><div class="k">Avg RPE</div><div id="avgRpe" class="v">—</div></div></div>
+<section id="homeView" class="view active">
+  <div class="hero"><div class="eyebrow">Dashboard</div><h1>Train smarter. Race faster.</h1><p>Your current week, recent work, and HYROX progress in one place.</p></div>
+  <div class="card">
+    <div class="row"><div class="profile"><div class="avatar" id="dashAvatar">TB</div><div><div class="card-title" id="dashName">ToddB</div><div class="sub">HYROX @ Stadium</div><span class="pill">Athlete</span></div></div><div class="center"><div class="sub">Total Entries</div><div style="font-size:28px;font-weight:950" id="dashEntries">0</div></div></div>
+    <div class="metrics"><div class="metric"><b id="weekWorkouts">0</b><span>Workouts</span></div><div class="metric"><b id="weekTime">0m</b><span>Total Time</span></div><div class="metric"><b id="weekStations">0</b><span>Stations</span></div></div>
+  </div>
+  <div class="section-head"><h2>Recent Activity</h2><button class="linkbtn" data-go="history">View all</button></div>
+  <div class="card tight" id="recentActivity"></div>
+  <div class="card"><div class="row"><div><div class="sub">Upcoming Race</div><div class="card-title" style="margin-top:4px">HYROX Simulation</div><div class="sub">Training target</div></div><div class="center"><div style="font-size:30px;font-weight:950;color:var(--lime)">READY</div><div class="sub">Build mode</div></div></div></div>
+</section>
 
-      <div class="panel"><div class="section-title">Add athlete</div><div class="grid"><div class="full"><div class="label">Athlete name</div><input id="newAthleteName" placeholder="e.g. Victor B"></div><div class="full"><button id="addAthleteBtn" class="btn">Add athlete</button></div></div></div>
+<section id="trainingView" class="view">
+  <div class="hero"><div class="eyebrow">Training Log</div><h1>Build the workout.</h1><p>Choose an athlete and log each station with race-day detail.</p></div>
+  <div class="card"><label>Athlete</label><select id="athleteSelect"></select></div>
+  <div class="section-head"><h2>HYROX Full Body</h2><span class="sub">8 stations</span></div>
+  <div class="station-list" id="stationList"></div>
+  <div style="height:10px"></div><button id="startWorkoutBtn" class="btn">Start Workout</button>
+</section>
 
-      <div class="panel"><div class="section-title">Team roster</div><div id="rosterList"></div></div>
+<section id="logView" class="view">
+  <div class="hero"><div class="eyebrow">Log Station</div><h1 id="logTitle">SkiErg</h1><p>Capture the key details for this station.</p></div>
+  <div class="selected-station"><div class="badge" id="stationBadge">01</div><div><h3 id="stationName">SkiErg</h3><p id="stationDetail">1,000 m</p></div></div>
+  <div class="card"><div class="formgrid">
+    <div><label>Weight</label><input id="weight" inputmode="decimal" placeholder="kg"></div>
+    <div><label>Time</label><input id="time" placeholder="4:01"></div>
+    <div><label>Reps</label><input id="reps" inputmode="numeric" placeholder="100"></div>
+    <div><label>Distance</label><input id="distance" inputmode="numeric" placeholder="1000"></div>
+    <div class="full"><label>RPE 1–10</label><input id="rpe" inputmode="numeric" placeholder="8"></div>
+    <div class="full"><label>Notes</label><textarea id="notes" rows="4" placeholder="Felt strong today..."></textarea></div>
+  </div></div>
+  <button id="completeStationBtn" class="btn">Complete Station</button><div style="height:9px"></div><button id="skipStationBtn" class="btn secondary">Skip Station</button>
+</section>
 
-      <div class="panel"><div class="rowhead"><div class="section-title" style="margin:0">Team activity</div><button id="demoBtn" class="btn-soft">Demo data</button></div><div id="coachResults"></div></div>
-    </section>
-  </main>
+<section id="summaryView" class="view">
+  <div class="hero center"><div class="eyebrow">Workout Summary</div><div class="summary-check">✓</div><h1>Workout Complete!</h1><p>HYROX Full Body</p></div>
+  <div class="card"><div class="metrics"><div class="metric"><b id="summaryTime">0m</b><span>Logged Time</span></div><div class="metric"><b id="summaryCount">0</b><span>Stations</span></div><div class="metric"><b id="summaryRpe">—</b><span>Avg RPE</span></div></div><div id="summaryList" class="summary-list"></div></div>
+  <button class="btn" data-go="home">Save Workout</button>
+</section>
+
+<section id="raceView" class="view">
+  <div class="hero"><div class="eyebrow">Live Race</div><h1>Race mode is next.</h1><p>This web version previews the flow. The native Apple Watch version will handle live splits, heart rate, pace, and station progression.</p></div>
+  <div class="card center"><div class="sub">CURRENT CONCEPT</div><div style="font-size:48px;font-weight:950;margin:10px 0">23:47</div><div class="card-title">RUN 1 · 1.00 km</div><div class="sub" style="margin-top:6px">Pace 4:45 /km</div></div>
+  <div class="card"><div class="section-head" style="margin-top:0"><h2>Next Up</h2><span class="pill">Station 1</span></div><div class="selected-station"><div class="badge">01</div><div><h3>SkiErg</h3><p>1,000 m</p></div></div></div>
+</section>
+
+<section id="historyView" class="view">
+  <div class="hero"><div class="eyebrow">History & Progress</div><h1>See what is improving.</h1><p>Review logged station work and trends over time.</p></div>
+  <div class="historytabs"><button class="active">All</button><button>Workouts</button><button>Races</button></div>
+  <div class="section-head"><h2>This Month</h2><span class="sub" id="historyCount">0 activities</span></div>
+  <div class="card tight" id="historyList"></div>
+  <div class="section-head"><h2>Performance Trends</h2><span class="sub">Current data</span></div>
+  <div class="stats4"><div class="metric"><b id="trendEntries">0</b><span>Total Entries</span></div><div class="metric"><b id="trendRpe">—</b><span>Avg RPE</span></div><div class="metric"><b id="trendAthletes">0</b><span>Athletes</span></div></div>
+</section>
+
+<section id="teamView" class="view">
+  <div class="hero"><div class="eyebrow">Team View</div><h1>Coach dashboard.</h1><p>Manage athletes and review team training activity.</p></div>
+  <div class="metrics"><div class="metric"><b id="activeAthletes">0</b><span>Active Athletes</span></div><div class="metric"><b id="teamEntries">0</b><span>Entries</span></div><div class="metric"><b id="teamAvg">—</b><span>Avg RPE</span></div></div>
+  <div class="section-head"><h2>Add Athlete</h2></div>
+  <div class="card"><label>Athlete name</label><input id="newAthleteName" placeholder="e.g. Victor B"><div style="height:10px"></div><button id="addAthleteBtn" class="btn">Add Athlete</button></div>
+  <div class="section-head"><h2>Roster</h2><span class="sub">Athletes</span></div>
+  <div class="card tight"><div class="team-row head"><div>Athlete</div><div>Entries</div><div>Avg RPE</div></div><div id="rosterList"></div></div>
+  <div class="section-head"><h2>Team Activity</h2></div>
+  <div class="card tight" id="teamActivity"></div>
+</section>
 </div>
-<div id="toast" class="toast">Saved</div>
+
+<nav class="nav">
+  <button class="active" data-go="home">Home</button><button data-go="training">Training</button><button data-go="race">Race</button><button data-go="history">History</button><button data-go="team">Team</button>
+</nav>
+<div class="toast" id="toast">Saved</div>
+
 <script>
 (function(){
-  var stations=["SkiErg","Sled Push","Sled Pull","Burpee Broad Jump","Row","Farmers Carry","Sandbag Lunges","Wall Balls"];
-  var defaults=["ToddB","AmandaB","DarcelH","JulianneB","SarahC","JohnY","DelandaC","LeahB"];
-  var currentStation=stations[0], entryKey="hybridsplit_stadium_entries_v1", rosterKey="hybridsplit_stadium_roster_v1";
-
+  var stations=[
+    {name:'1 km Run',detail:'1,000 m'},{name:'SkiErg',detail:'1,000 m'},{name:'Sled Push',detail:'50 m'},{name:'Sled Pull',detail:'50 m'},
+    {name:'Burpee Broad Jump',detail:'80 m'},{name:'Row',detail:'1,000 m'},{name:'Farmers Carry',detail:'200 m'},{name:'Wall Balls',detail:'100 reps'}
+  ];
+  var defaults=['ToddB','AmandaB','DarcelH','JulianneB','SarahC','JohnY','DelandaC','LeahB'];
+  var entryKey='hybridsplit_stadium_entries_v1',rosterKey='hybridsplit_stadium_roster_v1';
+  var currentStation=1,currentView='home';
   function el(id){return document.getElementById(id)}
   function clear(n){while(n.firstChild)n.removeChild(n.firstChild)}
-  function toast(m){el("toast").textContent=m;el("toast").style.display="block";setTimeout(function(){el("toast").style.display="none"},1200)}
-  function loadEntries(){try{return JSON.parse(localStorage.getItem(entryKey)||"[]")}catch(e){return[]}}
+  function toast(msg){var t=el('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none'},1300)}
+  function loadEntries(){try{return JSON.parse(localStorage.getItem(entryKey)||'[]')}catch(e){return[]}}
   function saveEntries(d){localStorage.setItem(entryKey,JSON.stringify(d))}
-  function loadRoster(){
-    try{
-      var r=JSON.parse(localStorage.getItem(rosterKey)||"null");
-      if(r&&r.length)return r;
-    }catch(e){}
-    var seed=defaults.map(function(n){return{id:n,name:n,active:true}});
-    saveRoster(seed);
-    return seed;
-  }
   function saveRoster(r){localStorage.setItem(rosterKey,JSON.stringify(r))}
+  function loadRoster(){try{var r=JSON.parse(localStorage.getItem(rosterKey)||'null');if(r&&r.length)return r}catch(e){}var seed=defaults.map(function(n){return{id:n,name:n,active:true}});saveRoster(seed);return seed}
   function activeRoster(){return loadRoster().filter(function(a){return a.active})}
-
-  function renderAthleteSelect(){
-    var s=el("athleteSelect"),current=s.value,active=activeRoster();
-    clear(s);
-    active.forEach(function(a){
-      var o=document.createElement("option");
-      o.value=a.id;
-      o.textContent=a.name;
-      s.appendChild(o);
-    });
-    if(active.some(function(a){return a.id===current}))s.value=current;
-    renderAthlete();
-  }
-
-  function renderChips(){
-    var b=el("stationChips");
-    clear(b);
-    stations.forEach(function(n){
-      var x=document.createElement("button");
-      x.className="chip"+(n===currentStation?" active":"");
-      x.textContent=n;
-      x.onclick=function(){currentStation=n;renderChips()};
-      b.appendChild(x);
-    });
-  }
-
-  function describe(e){
-    var p=[];
-    if(e.weight)p.push(e.weight+" kg");
-    if(e.time)p.push(e.time);
-    if(e.reps)p.push(e.reps+" reps");
-    if(e.distance)p.push(e.distance+" m");
-    if(e.rpe)p.push("RPE "+e.rpe);
-    return p.join(" · ")||"Result saved";
-  }
-
-  function athleteName(id){
-    var r=loadRoster().filter(function(a){return a.id===id})[0];
-    return r?r.name:id;
-  }
-
-  function resultNode(e,coach){
-    var row=document.createElement("div");row.className="result";
-    var t=document.createElement("div");t.className="result-title";t.textContent=(coach?athleteName(e.athlete)+" · ":"")+e.station;row.appendChild(t);
-    var m=document.createElement("div");m.className="result-meta";m.textContent=describe(e);row.appendChild(m);
-    if(e.notes){var n=document.createElement("div");n.className="result-meta";n.textContent=e.notes;row.appendChild(n)}
-    return row;
-  }
-
-  function renderAthlete(){
-    var who=el("athleteSelect").value,data=loadEntries(),mine=[],seen={};
-    data.forEach(function(e){if(e.athlete===who){mine.push(e);seen[e.station]=true}});
-    el("completed").textContent=Object.keys(seen).length+" / 8";
-    var box=el("athleteResults");clear(box);
-    if(!who){
-      var x=document.createElement("div");x.className="empty";x.textContent="No active athletes. Ask the coach to add one.";box.appendChild(x);return;
-    }
-    if(!mine.length){
-      var e=document.createElement("div");e.className="empty";e.textContent="No station results logged yet.";box.appendChild(e);return;
-    }
-    mine.slice().reverse().forEach(function(e){box.appendChild(resultNode(e,false))});
-  }
-
-  function renderRoster(){
-    var r=loadRoster(),box=el("rosterList");clear(box);
-    r.forEach(function(a){
-      var row=document.createElement("div");row.className="roster-row";
-      var left=document.createElement("div");
-      var name=document.createElement("div");name.className="result-title";name.textContent=a.name;left.appendChild(name);
-      var st=document.createElement("span");st.className="status"+(a.active?"":" off");st.textContent=a.active?"Active":"Inactive";left.appendChild(st);
-      var actions=document.createElement("div");actions.className="actions";
-
-      var edit=document.createElement("button");edit.className="mini";edit.textContent="Rename";
-      edit.onclick=function(){
-        var next=prompt("Rename athlete",a.name);
-        if(next&&next.trim()){
-          var rr=loadRoster();
-          rr.forEach(function(x){if(x.id===a.id)x.name=next.trim()});
-          saveRoster(rr);renderRoster();renderAthleteSelect();renderCoach();toast("Athlete renamed");
-        }
-      };
-
-      var toggle=document.createElement("button");toggle.className=a.active?"btn-danger":"mini";toggle.textContent=a.active?"Deactivate":"Reactivate";
-      toggle.onclick=function(){
-        var rr=loadRoster();
-        rr.forEach(function(x){if(x.id===a.id)x.active=!x.active});
-        saveRoster(rr);renderRoster();renderAthleteSelect();renderCoach();toast(a.active?"Athlete deactivated":"Athlete reactivated");
-      };
-
-      actions.appendChild(edit);actions.appendChild(toggle);
-      row.appendChild(left);row.appendChild(actions);box.appendChild(row);
-    });
-  }
-
-  function renderCoach(){
-    var data=loadEntries(),rpes=[];
-    data.forEach(function(e){var n=Number(e.rpe);if(n>0)rpes.push(n)});
-    el("athleteCount").textContent=activeRoster().length;
-    el("entryCount").textContent=data.length;
-    el("avgRpe").textContent=rpes.length?(rpes.reduce(function(a,b){return a+b},0)/rpes.length).toFixed(1):"—";
-    renderRoster();
-
-    var box=el("coachResults");clear(box);
-    if(!data.length){
-      var e=document.createElement("div");e.className="empty";e.textContent="No results yet. Log a station or load demo data.";box.appendChild(e);return;
-    }
-    data.slice().reverse().forEach(function(e){box.appendChild(resultNode(e,true))});
-  }
-
-  el("athleteTab").onclick=function(){
-    el("athleteView").classList.remove("hidden");el("coachView").classList.add("hidden");
-    el("athleteTab").classList.add("active");el("coachTab").classList.remove("active");renderAthlete();
-  };
-
-  el("coachTab").onclick=function(){
-    el("athleteView").classList.add("hidden");el("coachView").classList.remove("hidden");
-    el("coachTab").classList.add("active");el("athleteTab").classList.remove("active");renderCoach();
-  };
-
-  el("athleteSelect").onchange=renderAthlete;
-
-  el("addAthleteBtn").onclick=function(){
-    var name=el("newAthleteName").value.trim();
-    if(!name){toast("Enter an athlete name");return}
-    var r=loadRoster(),id="athlete_"+Date.now();
-    r.push({id:id,name:name,active:true});
-    saveRoster(r);
-    el("newAthleteName").value="";
-    renderRoster();renderAthleteSelect();renderCoach();toast("Athlete added");
-  };
-
-  el("saveBtn").onclick=function(){
-    var who=el("athleteSelect").value;
-    if(!who){toast("Add an athlete first");return}
-    var e={
-      athlete:who,station:currentStation,
-      weight:el("weight").value.trim(),
-      time:el("time").value.trim(),
-      reps:el("reps").value.trim(),
-      distance:el("distance").value.trim(),
-      rpe:el("rpe").value.trim(),
-      notes:el("notes").value.trim(),
-      createdAt:new Date().toISOString()
-    };
-    var d=loadEntries();d.push(e);saveEntries(d);
-    ["weight","time","reps","distance","rpe","notes"].forEach(function(id){el(id).value=""});
-    renderAthlete();toast("Station saved");
-  };
-
-  el("resetBtn").onclick=function(){
-    var who=el("athleteSelect").value;
-    saveEntries(loadEntries().filter(function(e){return e.athlete!==who}));
-    renderAthlete();toast("Session reset");
-  };
-
-  el("demoBtn").onclick=function(){
-    if(loadEntries().length){toast("Data already present");return}
-    var roster=loadRoster();
-    function idFor(n){var a=roster.filter(function(x){return x.name===n||x.id===n})[0];return a?a.id:n}
-    saveEntries([
-      {athlete:idFor("AmandaB"),station:"Sled Push",weight:"152",time:"2:41",reps:"",distance:"50",rpe:"8",notes:"Strong first half",createdAt:new Date().toISOString()},
-      {athlete:idFor("ToddB"),station:"Wall Balls",weight:"9",time:"4:18",reps:"100",distance:"",rpe:"9",notes:"Steady sets",createdAt:new Date().toISOString()},
-      {athlete:idFor("DarcelH"),station:"SkiErg",weight:"",time:"4:07",reps:"",distance:"1000",rpe:"7",notes:"Even pace",createdAt:new Date().toISOString()}
-    ]);
-    renderCoach();toast("Demo data loaded");
-  };
-
-  renderChips();
-  renderAthleteSelect();
-  renderCoach();
+  function athleteName(id){var a=loadRoster().find(function(x){return x.id===id});return a?a.name:id}
+  function initials(name){return name.split(/\s+/).map(function(x){return x[0]||''}).join('').slice(0,2).toUpperCase()||'HS'}
+  function selectedAthlete(){return el('athleteSelect').value}
+  function parseMinutes(t){if(!t)return 0;var p=t.split(':').map(Number);if(p.some(isNaN))return 0;if(p.length===2)return p[0]+p[1]/60;if(p.length===3)return p[0]*60+p[1]+p[2]/60;return Number(t)||0}
+  function avgRpe(data){var vals=data.map(function(e){return Number(e.rpe)}).filter(function(n){return n>0});return vals.length?(vals.reduce(function(a,b){return a+b},0)/vals.length).toFixed(1):'—'}
+  function go(name){currentView=name;document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active')});el(name+'View').classList.add('active');document.querySelectorAll('.nav button').forEach(function(b){b.classList.toggle('active',b.dataset.go===name)});window.scrollTo({top:0,behavior:'smooth'});renderAll()}
+  document.querySelectorAll('[data-go]').forEach(function(b){b.onclick=function(){go(this.dataset.go)}})
+  el('athleteRole').onclick=function(){this.classList.add('active');el('coachRole').classList.remove('active');go('home')}
+  el('coachRole').onclick=function(){this.classList.add('active');el('athleteRole').classList.remove('active');go('team')}
+  function renderAthleteSelect(){var s=el('athleteSelect'),cur=s.value;clear(s);activeRoster().forEach(function(a){var o=document.createElement('option');o.value=a.id;o.textContent=a.name;s.appendChild(o)});if([].slice.call(s.options).some(function(o){return o.value===cur}))s.value=cur}
+  function renderStations(){var box=el('stationList');clear(box);stations.forEach(function(s,i){var d=document.createElement('button');d.className='station';d.style.width='100%';d.style.color='inherit';d.style.textAlign='left';d.style.cursor='pointer';d.innerHTML='<div class="num">'+(i+1)+'</div><div class="meta"><b>'+s.name+'</b><span>'+s.detail+'</span></div><div class="arrow">›</div>';d.onclick=function(){openStation(i)};box.appendChild(d)})}
+  function openStation(i){currentStation=i;var s=stations[i];el('logTitle').textContent=s.name;el('stationName').textContent=s.name;el('stationDetail').textContent=s.detail;el('stationBadge').textContent=String(i+1).padStart(2,'0');go('log')}
+  el('startWorkoutBtn').onclick=function(){openStation(0)}
+  el('skipStationBtn').onclick=function(){if(currentStation<stations.length-1)openStation(currentStation+1);else go('summary')}
+  el('completeStationBtn').onclick=function(){var who=selectedAthlete();if(!who){toast('Choose an athlete first');return}var e={athlete:who,station:stations[currentStation].name,weight:el('weight').value.trim(),time:el('time').value.trim(),reps:el('reps').value.trim(),distance:el('distance').value.trim(),rpe:el('rpe').value.trim(),notes:el('notes').value.trim(),createdAt:new Date().toISOString()};var data=loadEntries();data.push(e);saveEntries(data);['weight','time','reps','distance','rpe','notes'].forEach(function(id){el(id).value=''});toast('Station saved');if(currentStation<stations.length-1)openStation(currentStation+1);else go('summary')}
+  function activityNode(e,coach){var d=document.createElement('div');d.className='activity';var badge=document.createElement('div');badge.className='activity-icon';badge.textContent=(e.station||'ST').slice(0,2).toUpperCase();var grow=document.createElement('div');grow.className='grow';var strong=document.createElement('strong');strong.textContent=(coach?athleteName(e.athlete)+' · ':'')+e.station;var sm=document.createElement('small');var bits=[];if(e.weight)bits.push(e.weight+' kg');if(e.distance)bits.push(e.distance+' m');if(e.reps)bits.push(e.reps+' reps');if(e.rpe)bits.push('RPE '+e.rpe);sm.textContent=bits.join(' · ')||'Station logged';grow.appendChild(strong);grow.appendChild(sm);var tm=document.createElement('div');tm.className='time';tm.textContent=e.time||'—';d.appendChild(badge);d.appendChild(grow);d.appendChild(tm);return d}
+  function renderHome(){var who=selectedAthlete()||activeRoster()[0]?.id,data=loadEntries(),mine=data.filter(function(e){return e.athlete===who});var name=athleteName(who||'Athlete');el('dashName').textContent=name;el('dashAvatar').textContent=initials(name);el('dashEntries').textContent=mine.length;el('weekWorkouts').textContent=Math.max(0,new Set(mine.map(function(e){return (e.createdAt||'').slice(0,10)})).size);var mins=mine.reduce(function(s,e){return s+parseMinutes(e.time)},0);el('weekTime').textContent=mins?Math.round(mins)+'m':'0m';el('weekStations').textContent=new Set(mine.map(function(e){return e.station})).size;var box=el('recentActivity');clear(box);if(!mine.length){box.innerHTML='<div class="empty">No activity yet. Start a workout to build your dashboard.</div>'}else mine.slice(-4).reverse().forEach(function(e){box.appendChild(activityNode(e,false))})}
+  function renderHistory(){var data=loadEntries();el('historyCount').textContent=data.length+' activities';el('trendEntries').textContent=data.length;el('trendRpe').textContent=avgRpe(data);el('trendAthletes').textContent=new Set(data.map(function(e){return e.athlete})).size;var box=el('historyList');clear(box);if(!data.length){box.innerHTML='<div class="empty">Your logged workouts will appear here.</div>'}else data.slice(-10).reverse().forEach(function(e){box.appendChild(activityNode(e,true))})}
+  function renderSummary(){var who=selectedAthlete(),data=loadEntries().filter(function(e){return e.athlete===who}).slice(-8);var mins=data.reduce(function(s,e){return s+parseMinutes(e.time)},0);el('summaryTime').textContent=mins?Math.round(mins)+'m':'0m';el('summaryCount').textContent=data.length;el('summaryRpe').textContent=avgRpe(data);var box=el('summaryList');clear(box);data.forEach(function(e){var line=document.createElement('div');line.className='summary-line';line.innerHTML='<span>'+e.station+'</span><b>'+(e.time||e.weight||e.reps||'Saved')+'</b>';box.appendChild(line)})}
+  function renderTeam(){var roster=loadRoster(),data=loadEntries();el('activeAthletes').textContent=roster.filter(function(a){return a.active}).length;el('teamEntries').textContent=data.length;el('teamAvg').textContent=avgRpe(data);var box=el('rosterList');clear(box);roster.forEach(function(a){var mine=data.filter(function(e){return e.athlete===a.id});var row=document.createElement('div');row.className='team-row';var name=document.createElement('div');name.innerHTML='<div class="team-name"><div class="miniavatar">'+initials(a.name)+'</div><div><b>'+a.name+'</b><div><span class="status '+(a.active?'':'off')+'">'+(a.active?'Active':'Inactive')+'</span></div></div></div>';var entries=document.createElement('div');entries.textContent=mine.length;var rpe=document.createElement('div');rpe.innerHTML='<b>'+avgRpe(mine)+'</b><div class="athlete-actions"><button data-a="rename">Rename</button><button data-a="toggle">'+(a.active?'Deactivate':'Activate')+'</button></div>';rpe.querySelector('[data-a="rename"]').onclick=function(){var n=prompt('Rename athlete',a.name);if(n&&n.trim()){var rr=loadRoster();rr.forEach(function(x){if(x.id===a.id)x.name=n.trim()});saveRoster(rr);renderAll();toast('Athlete renamed')}};rpe.querySelector('[data-a="toggle"]').onclick=function(){var rr=loadRoster();rr.forEach(function(x){if(x.id===a.id)x.active=!x.active});saveRoster(rr);renderAll();toast(a.active?'Athlete deactivated':'Athlete activated')};row.appendChild(name);row.appendChild(entries);row.appendChild(rpe);box.appendChild(row)});var act=el('teamActivity');clear(act);if(!data.length){act.innerHTML='<div class="empty">No team activity yet.</div>'}else data.slice(-6).reverse().forEach(function(e){act.appendChild(activityNode(e,true))})}
+  el('addAthleteBtn').onclick=function(){var name=el('newAthleteName').value.trim();if(!name){toast('Enter an athlete name');return}var r=loadRoster();r.push({id:'athlete_'+Date.now(),name:name,active:true});saveRoster(r);el('newAthleteName').value='';renderAll();toast('Athlete added')}
+  function renderAll(){renderAthleteSelect();renderStations();renderHome();renderHistory();renderSummary();renderTeam()}
+  el('athleteSelect').onchange=function(){renderAll()}
+  renderAll();
 })();
 </script>
 </body>
